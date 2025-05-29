@@ -3,62 +3,62 @@ variable "bucket_name" {
   type        = string
 }
 
+variable "tags" {
+  description = "Tags to apply to the bucket"
+  type        = map(string)
+  default     = {}
+}
+
 variable "lifecycle_days" {
-  description = "Number of days before objects are expired"
+  description = "Number of days before objects expire"
   type        = number
   default     = 30
 }
 
-variable "bucket_prefix" {
-  description = "Creates a unique bucket name beginning with the specified prefix"
-  type        = string
-  default     = ""
-
-}
-
 variable "versioning" {
-  description = "Map containing versioning configuration"
+  description = "Enable versioning"
   type        = bool
   default     = false
-
 }
 
-variable "tags" {
-  description = "A map of mandatorytags to assign to the bucket"
-  type        = map(string)
-  default = {
-    Env              = "Dev"
-    ApplicationName  = "Tina"
-    APMID            = ""
-    SupportStatus    = ""
-    BillingIndicator = ""
-    DataSensitivity  = ""
-    Compliance       = ""
-
-  }
-}
-
-variable "create" {
-  description = "Whether to create this resource or not?"
+variable "enable_eventbridge" {
+  description = "Enable EventBridge notifications"
   type        = bool
-  default     = true
-}
-
-variable "Enable_eventbridge" {
-  description = "Enable or disable Amazon Eventbridge notifications"
-  type        = bool
-  default     = true
+  default     = false
 }
 
 variable "enable_logging" {
-  description = "Enable or disable server access logging"
+  description = "Enable S3 access logging"
   type        = bool
   default     = false
-
 }
 
-variable "enable_bucket" {
-  description = "enable or disable bucket"
+variable "log_bucket_name" {
+  description = "The bucket to store access logs"
+  type        = string
+  default     = ""
+}
+
+variable "bucket_prefix" {
+  description = "Prefix for log files"
+  type        = string
+  default     = ""
+}
+
+variable "enable_object_lock" {
+  description = "Enable object lock configuration (must be set at bucket creation)"
   type        = bool
-  default     = false #Set default value
+  default     = false
+}
+
+variable "object_lock_mode" {
+  description = "Object lock retention mode ('GOVERNANCE' or 'COMPLIANCE')"
+  type        = string
+  default     = "GOVERNANCE"
+}
+
+variable "object_lock_days" {
+  description = "Default retention days for object lock"
+  type        = number
+  default     = 1
 }
